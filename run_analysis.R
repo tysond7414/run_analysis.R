@@ -19,11 +19,11 @@
 # algorithms to attract new users. The data linked to from the course website represent data collected 
 # from the accelerometers from the Samsung Galaxy S smartphone. A full description is available at the 
 # site where the data was obtained: 
-
+  
 # http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones 
 
 # Here are the data for the project: 
-
+  
 # https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip 
 
 # You should create one R script called run_analysis.R that does the following. 
@@ -63,11 +63,11 @@ Xtr$ActivityID<-ytr$ActivityID
 Xtr$SubjectID<-SubTr$SubjectID
 
 ## Merge the update X files
-data<-rbind(Xtest, Xtr)
-cnames<-colnames(data)
-cnames<-gsub("\\.+mean\\.+", cnames, replacement="Mean")
-cnames<-gsub("\\.+std\\.+",  cnames, replacement="Std")
-colnames(data)<-cnames
+  data<-rbind(Xtest, Xtr)
+  cnames<-colnames(data)
+  cnames<-gsub("\\.+mean\\.+", cnames, replacement="Mean")
+  cnames<-gsub("\\.+std\\.+",  cnames, replacement="Std")
+  colnames(data)<-cnames
 
 ## Add an activiy names column
 act<-read.table("/Users/Tyson/Desktop/DS3_Getting_and_Cleaning Data/UCI HAR Dataset/activity_labels.txt", header=F, as.is=T, col.names=c("ActivityID", "ActivityName"))
@@ -79,16 +79,16 @@ lab_data<-merge(data,act)
 # Creates a second, independent tidy data set with the average of each variable for each 
 # activity and each subject. 
 
-library(reshape2)
-
+  library(reshape2)
+  
 ## melt the dataset
-id_vars=c("ActivityID", "ActivityName", "SubjectID")
-measure_vars=setdiff(colnames(lab_data), id_vars)
-melt_dat<-melt(lab_data, id=id_vars, measure.vars=measure_vars)
-
+  id_vars=c("ActivityID", "ActivityName", "SubjectID")
+  measure_vars=setdiff(colnames(lab_data), id_vars)
+  melt_dat<-melt(lab_data, id=id_vars, measure.vars=measure_vars)
+  
 ## recast 
-recas<-dcast(melted_data, ActivityName + SubjectID ~ variable, mean)
-
+  recas<-dcast(melted_data, ActivityName + SubjectID ~ variable, mean)
+  
 ## Create the tidy data set and save it on to the named file
 write.table(recas,"/Users/Tyson/Desktop/DS3_Getting_and_Cleaning Data/UCI HAR Dataset/tidy_data.txt")
 
